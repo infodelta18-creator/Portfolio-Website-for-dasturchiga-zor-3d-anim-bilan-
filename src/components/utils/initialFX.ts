@@ -7,7 +7,6 @@ import { gsap } from "gsap";
  * <h1><span>L</span><span>a</span><span>n</span>...</h1>
  */
 export function initialFX() {
-  // Scroll va main class
   document.body.style.overflowY = "auto";
   document.getElementsByTagName("main")[0]?.classList.add("main-active");
 
@@ -37,8 +36,12 @@ export function initialFX() {
     }
   );
 
-  // H2 info animatsiyasi
   const landingH2Info = document.querySelectorAll(".landing-h2-info span");
+  const landingH2Info1 = document.querySelectorAll(".landing-h2-info-1 span");
+  const landingH21 = document.querySelectorAll(".landing-h2-1 span");
+  const landingH22 = document.querySelectorAll(".landing-h2-2 span");
+
+  // H2 info animatsiyasi
   gsap.fromTo(
     landingH2Info,
     { opacity: 0, y: 80, filter: "blur(5px)" },
@@ -78,68 +81,33 @@ export function initialFX() {
     }
   );
 
-  // Agar keyinchalik boshqa loop animatsiyalar bo‘lsa, shunga o‘xshash gsap.timeline ishlatish mumkin
-}
-
-  var landingText3 = new SplitText(".landing-h2-info-1", TextProps);
-  var landingText4 = new SplitText(".landing-h2-1", TextProps);
-  var landingText5 = new SplitText(".landing-h2-2", TextProps);
-
-  LoopText(landingText2, landingText3);
-  LoopText(landingText4, landingText5);
-}
-
-function LoopText(Text1: SplitText, Text2: SplitText) {
-  var tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+  // Loop animatsiya timeline bilan
+  const loopTimeline = gsap.timeline({ repeat: -1, repeatDelay: 1 });
   const delay = 4;
   const delay2 = delay * 2 + 1;
 
-  tl.fromTo(
-    Text2.chars,
-    { opacity: 0, y: 80 },
-    {
-      opacity: 1,
-      duration: 1.2,
-      ease: "power3.inOut",
-      y: 0,
-      stagger: 0.1,
-      delay: delay,
-    },
-    0
-  )
+  loopTimeline
     .fromTo(
-      Text1.chars,
+      landingH2Info1,
+      { opacity: 0, y: 80 },
+      { opacity: 1, y: 0, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay },
+      0
+    )
+    .fromTo(
+      landingH2Info,
       { y: 80 },
-      {
-        duration: 1.2,
-        ease: "power3.inOut",
-        y: 0,
-        stagger: 0.1,
-        delay: delay2,
-      },
+      { y: 0, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay: delay2 },
       1
     )
     .fromTo(
-      Text1.chars,
+      landingH2Info,
       { y: 0 },
-      {
-        y: -80,
-        duration: 1.2,
-        ease: "power3.inOut",
-        stagger: 0.1,
-        delay: delay,
-      },
+      { y: -80, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay },
       0
     )
     .to(
-      Text2.chars,
-      {
-        y: -80,
-        duration: 1.2,
-        ease: "power3.inOut",
-        stagger: 0.1,
-        delay: delay2,
-      },
+      landingH2Info1,
+      { y: -80, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay: delay2 },
       1
     );
 }
