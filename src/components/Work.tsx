@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
-gsap.registerPlugin(useGSAP);
+
 
 const Work = () => {
   useGSAP(() => {
