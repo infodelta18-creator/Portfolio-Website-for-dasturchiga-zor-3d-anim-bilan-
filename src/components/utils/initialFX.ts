@@ -1,14 +1,13 @@
 import { gsap } from "gsap";
 
 /**
- * initialFX - landing page animatsiyalari uchun
- * Harflar har bir span ichida bo'lishi kerak.
- * Masalan:
- * <h1><span>L</span><span>a</span><span>n</span>...</h1>
+ * initialFX - landing page animatsiyalari
  */
 export function initialFX() {
+  if (typeof window === "undefined") return;
+
   document.body.style.overflowY = "auto";
-  document.getElementsByTagName("main")[0]?.classList.add("main-active");
+  document.querySelector("main")?.classList.add("main-active");
 
   // Body background
   gsap.to("body", {
@@ -22,41 +21,45 @@ export function initialFX() {
   const landingH2 = document.querySelectorAll(".landing-intro h2 span");
   const landingH1 = document.querySelectorAll(".landing-intro h1 span");
 
-  gsap.fromTo(
-    [...landingH3, ...landingH2, ...landingH1],
-    { opacity: 0, y: 80, filter: "blur(5px)" },
-    {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      duration: 1.2,
-      stagger: 0.025,
-      ease: "power3.inOut",
-      delay: 0.3,
-    }
-  );
+  const allText = [...landingH3, ...landingH2, ...landingH1];
+
+  if (allText.length) {
+    gsap.fromTo(
+      allText,
+      { opacity: 0, y: 80, filter: "blur(5px)" },
+      {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        stagger: 0.025,
+        ease: "power3.inOut",
+        delay: 0.3,
+      }
+    );
+  }
 
   const landingH2Info = document.querySelectorAll(".landing-h2-info span");
   const landingH2Info1 = document.querySelectorAll(".landing-h2-info-1 span");
-  const landingH21 = document.querySelectorAll(".landing-h2-1 span");
-  const landingH22 = document.querySelectorAll(".landing-h2-2 span");
 
   // H2 info animatsiyasi
-  gsap.fromTo(
-    landingH2Info,
-    { opacity: 0, y: 80, filter: "blur(5px)" },
-    {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      duration: 1.2,
-      stagger: 0.025,
-      ease: "power3.inOut",
-      delay: 0.3,
-    }
-  );
+  if (landingH2Info.length) {
+    gsap.fromTo(
+      landingH2Info,
+      { opacity: 0, y: 80, filter: "blur(5px)" },
+      {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        stagger: 0.02,
+        ease: "power3.inOut",
+        delay: 0.3,
+      }
+    );
+  }
 
-  // Landing info h2 fade
+  // Fade section
   gsap.fromTo(
     ".landing-info-h2",
     { opacity: 0, y: 30 },
@@ -69,7 +72,7 @@ export function initialFX() {
     }
   );
 
-  // Header va nav fade
+  // Header fade
   gsap.fromTo(
     [".header", ".icons-section", ".nav-fade"],
     { opacity: 0 },
@@ -81,33 +84,30 @@ export function initialFX() {
     }
   );
 
-  // Loop animatsiya timeline bilan
-  const loopTimeline = gsap.timeline({ repeat: -1, repeatDelay: 1 });
-  const delay = 4;
-  const delay2 = delay * 2 + 1;
+  // Loop animation (safe version)
+  if (landingH2Info.length && landingH2Info1.length) {
+    const loopTimeline = gsap.timeline({ repeat: -1, repeatDelay: 1 });
 
-  loopTimeline
-    .fromTo(
-      landingH2Info1,
-      { opacity: 0, y: 80 },
-      { opacity: 1, y: 0, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay },
-      0
-    )
-    .fromTo(
-      landingH2Info,
-      { y: 80 },
-      { y: 0, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay: delay2 },
-      1
-    )
-    .fromTo(
-      landingH2Info,
-      { y: 0 },
-      { y: -80, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay },
-      0
-    )
-    .to(
-      landingH2Info1,
-      { y: -80, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay: delay2 },
-      1
-    );
+    const delay = 4;
+    const delay2 = delay * 2 + 1;
+
+    loopTimeline
+      .fromTo(
+        landingH2Info1,
+        { opacity: 0, y: 80 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.inOut",
+          stagger: 0.1,
+        }
+      )
+      .to(landingH2Info, {
+        y: -80,
+        duration: 1.2,
+        ease: "power3.inOut",
+        stagger: 0.1,
+      });
+  }
 }
