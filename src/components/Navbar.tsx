@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "@studio-freight/lenis";
+
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollTrigger);
